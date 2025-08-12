@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinito -Explorage- Kaun Banega Presidency Champion</title>
+    <link rel="stylesheet" href="dist/style.min.css">
+
+</head>
+<body>
+    <div class="game-container">
+        <!-- Start Screen -->
+        <div class="start-screen" id="startScreen">
+            <h1 class="start-title">Infinito -Explorage- Kaun Banega Presidency Champion</h1>
+            <p class="start-subtitle">Elite Business Quiz Championship</p>
+            <p class="start-subtitle">Designed By Vishweshwar Mensumane (Money Vichara Blogspot)</p>
+            <div class="rules">
+                <h3 style="color: #ff6b35; margin-bottom: 15px;">Championship Rules:</h3>
+                <ul style="list-style: none; padding: 0; font-size: 15px;">
+                    <li>🎯 <strong>10 Elite Business Questions</strong> from real corporate world</li>
+                    <li>⏱️ <strong>Total Time:</strong> 20 Minutes</li>
+                    <li>💯 <strong>Maximum Score:</strong> 100 Points</li>
+                    <li>🏆 <strong>New Scoring System:</strong></li>
+                    <li>&nbsp;&nbsp;&nbsp;• Round 1 (Q1-3): 5 points each = 15 points</li>
+                    <li>&nbsp;&nbsp;&nbsp;• Round 2 (Q4-7): 10 points each = 40 points</li>
+                    <li>&nbsp;&nbsp;&nbsp;• Round 3 (Q8-10): 15 points each = 45 points</li>
+                    <li>🔒 <strong>Safe Scores:</strong> Round 1: 15pts, Round 2: 55pts</li>
+                    <li>🆘 <strong>Lifelines (Rounds 1-2 only):</strong></li>
+                    <li>&nbsp;&nbsp;&nbsp;• Change Question & 50:50</li>
+                    <li>🚪 <strong>Quit:</strong> Only in Rounds 1-2, NOT during Round 3</li>
+                    <li>⏰ <strong>Time per question:</strong> 45s → 60s → 75s</li>
+                    <li>🎪 <strong>Round 3:</strong> No lifelines, no quit option!</li>
+                </ul>
+            </div>
+            <button class="btn btn-primary" onclick="startGame()">START CHAMPIONSHIP</button>
+        </div>
+
+        <!-- End Screen -->
+        <div class="end-screen hidden" id="endScreen">
+            <h1 class="start-title">Championship Over!</h1>
+            <div id="finalScore" class="start-subtitle"></div>
+            <div id="gameResult" class="rules"></div>
+            <button class="btn btn-primary" onclick="restartGame()">PLAY AGAIN</button>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">Infinito -Explorage- Kaun Banega Presidency Champion</div>
+        </div>
+
+        <!-- Game Info -->
+        <div class="game-info">
+            <div class="score">Score: <span id="currentScore">0</span></div>
+            <div class="timer" id="timer">Time: 45s</div>
+            <div class="question-counter">Question: <span id="questionNum">1</span>/10</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Question Area -->
+            <div class="question-area">
+                <div class="level-indicator" id="levelIndicator">Round 1: Foundation (5 points each)</div>
+                <div class="question-box">
+                    <div class="question" id="questionText">Loading...</div>
+                </div>
+                <div class="options-grid" id="optionsGrid">
+                    <!-- Options will be populated by JavaScript -->
+                </div>
+                <div class="controls">
+                    <button class="btn btn-secondary" id="quitBtn" onclick="quitGame()">QUIT GAME</button>
+                    <button class="btn btn-primary" id="confirmBtn" onclick="confirmAnswer()" disabled>LOCK ANSWER</button>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Score Ladder -->
+                <div class="score-ladder">
+                    <h3 style="margin-bottom: 15px; color: #ff6b35;">Prize Ladder</h3>
+                    <div class="ladder-item" data-question="10">
+                        <span>Q10</span>
+                        <span>100 Points</span>
+                    </div>
+                    <div class="ladder-item" data-question="9">
+                        <span>Q9</span>
+                        <span>85 Points</span>
+                    </div>
+                    <div class="ladder-item" data-question="8">
+                        <span>Q8</span>
+                        <span>70 Points 🔒</span>
+                    </div>
+                    <div class="ladder-item" data-question="7">
+                        <span>Q7</span>
+                        <span>55 Points</span>
+                    </div>
+                    <div class="ladder-item" data-question="6">
+                        <span>Q6</span>
+                        <span>45 Points</span>
+                    </div>
+                    <div class="ladder-item" data-question="5">
+                        <span>Q5</span>
+                        <span>35 Points</span>
+                    </div>
+                    <div class="ladder-item" data-question="4">
+                        <span>Q4</span>
+                        <span>25 Points 🔒</span>
+                    </div>
+                    <div class="ladder-item" data-question="3">
+                        <span>Q3</span>
+                        <span>15 Points</span>
+                    </div>
+                    <div class="ladder-item" data-question="2">
+                        <span>Q2</span>
+                        <span>10 Points</span>
+                    </div>
+                    <div class="ladder-item current" data-question="1">
+                        <span>Q1</span>
+                        <span>5 Points</span>
+                    </div>
+                </div>
+
+                <!-- Round Info -->
+                <div class="round-info" id="roundInfo">
+                    Round 1: Foundation<br>
+                    5 points per question<br>
+                    Lifelines Available
+                </div>
+
+                <!-- Lifelines -->
+                <div class="lifelines">
+                    <h3 style="margin-bottom: 15px; color: #ff6b35;">Lifelines</h3>
+                    <div class="lifeline" id="changeQuestion" onclick="useChangeQuestion()">
+                        🔄 Change Question
+                    </div>
+                    <div class="lifeline" id="fiftyFifty" onclick="useFiftyFifty()">
+                        💡 50:50
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dist/script.min.js"></script>
+
+</body>
