@@ -1,0 +1,16 @@
+{
+  "name": "vishvesh",
+  "version": "1.0.0",
+  "main": "script.js",
+  "scripts": {
+    "build": "mkdir -p dist && terser script.js --compress --mangle --output dist/script.min.js && cleancss -o dist/style.min.css style.css"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "clean-css-cli": "^5.6.3",
+    "terser": "^5.43.1"
+  }
+}
